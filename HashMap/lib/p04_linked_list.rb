@@ -20,7 +20,8 @@ class Node
 end
 
 class LinkedList < Node
-
+  include Enumerable
+  attr_accessor :head, :tail
   def initialize
     @tail, @head = Node.new, Node.new
     @tail.prev = @head
@@ -34,12 +35,17 @@ class LinkedList < Node
   end
 
   def first
+    return nil if self.empty?
+    self.head.next
   end
 
   def last
+    return nil if self.empty?
+    self.tail.prev
   end
 
   def empty?
+    self.head.next == self.tail
   end
 
   def get(key)
@@ -49,6 +55,11 @@ class LinkedList < Node
   end
 
   def append(key, val)
+    node = Node.new(key, val)
+    self.tail.prev.next = node
+    node.prev = self.tail.prev
+    node.next = self.tail
+    self.tail.prev = node
   end
 
   def update(key, val)
