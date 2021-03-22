@@ -50,9 +50,16 @@ class LinkedList < Node
   end
 
   def get(key)
+    each do |ele|
+      return ele.val if ele.key == key
+    end
   end
 
   def include?(key)
+    each do |ele|
+      return true if ele.key == key
+    end
+    false
   end
 
   def append(key, val)
@@ -64,18 +71,29 @@ class LinkedList < Node
   end
 
   def update(key, val)
-
+    each do |ele|
+      if ele.key == key
+        ele.val = val
+         return ele
+      end
+    end
+   
   end
 
   def remove(key)
+    each do |ele|
+      if ele.key == key
+        ele.prev.next = ele.next
+        ele.next.prev = ele.prev
+      end
+    end
   end
 
   def each
-    queue = [self.first]
-    until queue.empty?
-      node = queue.pop
-      yield node
-      queue << node.next unless node.next.val == nil
+    queue = self.head.next
+    until queue == self.tail
+      yield queue
+      queue = queue.next
     end
 
   end
