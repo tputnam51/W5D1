@@ -22,6 +22,7 @@ end
 class LinkedList < Node
   include Enumerable
   attr_accessor :head, :tail
+
   def initialize
     @tail, @head = Node.new, Node.new
     @tail.prev = @head
@@ -63,16 +64,24 @@ class LinkedList < Node
   end
 
   def update(key, val)
+
   end
 
   def remove(key)
   end
 
   def each
+    queue = [self.first]
+    until queue.empty?
+      node = queue.pop
+      yield node
+      queue << node.next unless node.next.val == nil
+    end
+
   end
 
   # uncomment when you have `each` working and `Enumerable` included
-  # def to_s
-  #   inject([]) { |acc, link| acc << "[#{link.key}, #{link.val}]" }.join(", ")
-  # end
+  def to_s
+    inject([]) { |acc, link| acc << "[#{link.key}, #{link.val}]" }.join(", ")
+  end
 end
