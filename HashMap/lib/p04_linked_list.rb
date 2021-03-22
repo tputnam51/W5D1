@@ -19,8 +19,13 @@ class Node
   end
 end
 
-class LinkedList
+class LinkedList < Node
+
   def initialize
+    @tail, @head = Node.new, Node.new
+    @tail.prev = @head
+    @head.next = @tail
+
   end
 
   def [](i)
